@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="start">
+            <h1>Coding Quiz Challenge</h1>
+            <p>There are five questions and you have 60 seconds to complete this quiz. If you answer a question incorrectly then time is subtracted. Good Luck!</p>
+            <button>Start Quiz</button>
+        </div>
+
+        <div id="quiz" style="display: none">
+            <div id="question"></div>
+            <div id="choices">
+                <button class="choice" id="A" onclick="checkAnswer('A')"></button><br>
+                <button class="choice" id="B" onclick="checkAnswer('B')"></button><br>
+                <button class="choice" id="C" onclick="checkAnswer('C')"></button><br>
+                <button class="choice" id="D" onclick="checkAnswer('D')"></button><br>
+            </div>
+            <div id="comment" style="border-top: 1px solid lightgrey"></div>
+            <div id="timer">
+                <div id="counter"></div>
+            </div>
+            <div id="progress"></div>
+        </div>
+        <div id="scoreContainer" style="display: none">
+            <h2>Good Job!</h2>
+            <div class="form-group">
+                    <label for="exampleInitial">Enter Initials :</label>
+                    <input class="form-control" id="exampleInitial">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="renderStorage()">Submit</button>
+        </div>
+        <div id="registeredUser" style="display: none">
+            <h2>Last Registered User</h2>
+            <p><strong>Your Initial:</strong> <span id=yourInitial></span></p>
+            <p><strong>Mark:</strong><span id="yourMark"></span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</body>
+</html>

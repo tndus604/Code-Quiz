@@ -1,19 +1,23 @@
 // select all elements
-const start = document.getElementById("start");
-const quiz = document.getElementById("quiz");
-const question = document.getElementById("question");
-const choiceA = document.getElementById("A");
-const choiceB = document.getElementById("B");
-const choiceC = document.getElementById("C");
-const choiceD = document.getElementById("D");
-const comment = document.getElementById("comment");
-const counter = document.getElementById("counter");
-// const timeGauge = document.getElementById("timeGauge");
-const progress = document.getElementById("progress");
-const scoreDiv = document.getElementById("scoreContainer");
-const registeredUser = document.getElementById("registeredUser");
-// const yourInitial = document.getElementById("yourInitial");
-// const yourMark = document.getElementById("yourMark ")
+var start = document.getElementById("start");
+var quiz = document.getElementById("quiz");
+var question = document.getElementById("question");
+var choiceA = document.getElementById("A");
+var choiceB = document.getElementById("B");
+var choiceC = document.getElementById("C");
+var choiceD = document.getElementById("D");
+var comment = document.getElementById("comment");
+var counter = document.getElementById("counter");
+
+var progress = document.getElementById("progress");
+var scoreContainer = document.getElementById("scoreContainer");
+var highscoreContainer = document.getElementById("highscoreContainer");
+var highscoreDiv = document.getElementById("high-scorePage");
+var highscoreInputName = document.getElementById("exampleInitial");
+var highscoreDisplayName = document.getElementById("highscore-initials");
+var highscoreDisplayScore = document.getElementById("highscore-score");
+
+
 
 // create our questions
 let questions = [
@@ -163,21 +167,66 @@ function wrongAnswer() {
 // score render
 function scoreRender(){
     quiz.style.display = "none";
-    scoreDiv.style.display = "block";
-    
+    scoreContainer.style.display = "block";
+
     // calculate the amount of question percent answered by the user
-    const scorePerCent = Math.round(100 * score/questions.length);
+    var scorePerCent = Math.round(100 * score/questions.length);
     
     // choose the image based on the scorePerCent
 
 
-    scoreDiv.innerHTML += "<p>Your score is "+ scorePerCent +"%</p>";
+    scoreContainer.innerHTML += "<p>Your score is "+ scorePerCent +"%</p>";
+}
+
+var initials = [];
+
+
+function renderInitials() {
+    highscoreDisplayName.innerHTML = "";
+
+    for (var i=0; i<initials.length; i++) {
+        var inputName = initials[i];
+
+        var li=document.createElement("li");
+        li.textContent=inputName;
+        li.setAttribute("data-index", i);
+
+        highscoreDisplayName.appendChild(li);
+    }
+}
+
+function init() {
+    var storedInitials = JSON.parse(localStorage.getItem("initials"));
+
+    if (storedInitials !== null) {
+        initials = storedInitials;
+    }
+
+    renderInitials();
+}
+
+function storeIntials() {
+    localStorage.setItem("initials", JSON.stringify(initials));
 }
 
 
 
-function renderStorage() {
-    scoreDiv.style.display = "none";
-    registeredUser.style.display = "block"; 
+function highScore() {
+    scoreContainer.style.display = "none";
+    highscoreContainer.style.display = "block"; 
+    
+    init();
+
+    var initialText = highscoreInputName.value.trim();
+    
+    if (initialText === "") {
+        return;
+    }
+
+    initials.push(initialText);
+    highscoreInputName.value="";
+
+    storeInitials();
+    renderInitials();
 
 }

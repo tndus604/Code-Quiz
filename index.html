@@ -27,18 +27,27 @@
             </div>
             <div id="progress"></div>
         </div>
+
         <div id="scoreContainer" style="display: none">
             <h2>Good Job!</h2>
             <div class="form-group">
-                    <label for="exampleInitial">Enter Initials :</label>
-                    <input class="form-control" id="exampleInitial">
+                <label for="exampleInitial">Enter Initials :</label>
+                <input type="text" class="form-control" id="exampleInitial" type="text"/>
             </div>
-            <button type="submit" class="btn btn-primary" onclick="renderStorage()">Submit</button>
+            <button type="submit" class="btn btn-primary" onclick="highScore()">Submit</button>
         </div>
-        <div id="registeredUser" style="display: none">
-            <h2>Last Registered User</h2>
-            <p><strong>Your Initial:</strong> <span id=yourInitial></span></p>
-            <p><strong>Mark:</strong><span id="yourMark"></span></p>
+
+        <div id="highscoreContainer" style="display: none">
+            <div id="high-scorePage">
+                <div id="highscore-header">
+                    <h3>User Initials</h3>
+                    <h3>Score</h3>
+                </div>
+                <ul id = "highscore-initials"></ul>
+                <div id = "highscore-score"></div>
+            </div>
+            <button id ="playAgain">Play Again</button>
+            <button id="clearHighscore">Clear Highscore</button>
         </div>
     </div>
     <script src="script.js"></script>

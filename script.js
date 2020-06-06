@@ -16,6 +16,7 @@ var highscoreDiv = document.getElementById("high-scorePage");
 var highscoreInputName = document.getElementById("exampleInitial");
 var highscoreDisplayName = document.getElementById("highscore-initials");
 var highscoreDisplayScore = document.getElementById("highscore-score");
+var displayScore = document.getElementById("displayScore");
 
 
 
@@ -54,21 +55,18 @@ let questions = [
         choiceA : "interface",
         choiceB : "throws",
         choiceC : "program",
-        choiceD : "program",
+        choiceD : "boolean",
         correct : "C"
     }
 ];
 
 
-
-// create some variables
+// create global variables
 
 const lastQuestion = questions.length - 1;
 let runningQuestion = 0;
 let count = 60;
 const endTime = 0; // 60s
-// const gaugeWidth = 150; // 150px
-// const gaugeUnit = gaugeWidth / endTime;
 let TIMER;
 let score = 0;
 
@@ -109,11 +107,9 @@ function renderProgress(){
 function startCounter(){
     if(count > 0){
         counter.innerHTML = count;
-        // timeGauge.style.width = count * gaugeUnit + "px";
         count--
     }else{
         // count = 60;
-        // change progress color to red
         // answerIsWrong();
         if(runningQuestion < lastQuestion){
             runningQuestion++;
@@ -171,62 +167,52 @@ function scoreRender(){
 
     // calculate the amount of question percent answered by the user
     var scorePerCent = Math.round(100 * score/questions.length);
-    
-    // choose the image based on the scorePerCent
 
+    displayScore.innerHTML = "";
 
-    scoreContainer.innerHTML += "<p>Your score is "+ scorePerCent +"%</p>";
+    displayScore.innerHTML += "<p>Your score is "+ scorePerCent +"%</p>";
 }
 
-var initials = [];
-
-
-function renderInitials() {
-    highscoreDisplayName.innerHTML = "";
-
-    for (var i=0; i<initials.length; i++) {
-        var inputName = initials[i];
-
-        var li=document.createElement("li");
-        li.textContent=inputName;
-        li.setAttribute("data-index", i);
-
-        highscoreDisplayName.appendChild(li);
-    }
-}
-
-function init() {
-    var storedInitials = JSON.parse(localStorage.getItem("initials"));
-
-    if (storedInitials !== null) {
-        initials = storedInitials;
-    }
-
-    renderInitials();
-}
-
-function storeIntials() {
-    localStorage.setItem("initials", JSON.stringify(initials));
-}
-
-
-
+// shows the highscores page
 function highScore() {
     scoreContainer.style.display = "none";
     highscoreContainer.style.display = "block"; 
+
+    var Initial = [document.querySelector('#exampleInitial').value];
+    var scorePerCent = [Math.round(100 * score/questions.length)];
     
-    init();
-
-    var initialText = highscoreInputName.value.trim();
+    localStorage.setItem("Initials", JSON.stringify(Initial));
     
-    if (initialText === "") {
-        return;
-    }
+    localStorage.setItem("Scores",JSON.stringify(scorePerCent));
 
-    initials.push(initialText);
-    highscoreInputName.value="";
+    var storedInitials = JSON.parse(localStorage.getItem("Initials")) || [];
+    console.log(storedInitials);
+    var storedScores = JSON.parse(localStorage.getItem("Scores")) || [];
+    console.log(storedScores);
 
-    storeInitials();
-    renderInitials();
 
+    
+    document.querySelector('#displayHighscore').innerHTML = `<li>${storedInitials} - ${storedScores}%</li>`;    
+}
+
+
+//clearing the highscores
+function clearHighscore() {
+    document.querySelector('#displayHighscore').innerHTML = "";
+}
+
+//Restart the quiz
+function restartQuiz() {
+    runningQuestion = 0;
+    const lastQuestion = questions.length - 1;
+    count = 60;
+    const endTime = 0;
+    // let TIMER;
+    score = 0; 
+    highscoreContainer.style.display = "none";
+    renderQuestion();
+    quiz.style.display = "block";
+    renderProgress();
+    startCounter();
+    TIMER = setInterval(startCounter,1000);
 }

@@ -35,20 +35,16 @@
                 <input type="text" class="form-control" id="exampleInitial" type="text"/>
             </div>
             <button type="submit" class="btn btn-primary" onclick="highScore()">Submit</button>
+            <div id="displayScore"></div>
         </div>
 
         <div id="highscoreContainer" style="display: none">
-            <div id="high-scorePage">
-                <div id="highscore-header">
-                    <h3>User Initials</h3>
-                    <h3>Score</h3>
-                </div>
-                <ul id = "highscore-initials"></ul>
-                <div id = "highscore-score"></div>
-            </div>
-            <button id ="playAgain">Play Again</button>
-            <button id="clearHighscore">Clear Highscore</button>
+            <h3>Shows the Highscore</h3>
+            <div id="displayHighscore"></div>
+            <button id ="playAgain" onclick="restartQuiz()">Play Again</button>
+            <button id="clearHighscore" onclick="clearHighscore()">Clear Highscore</button>
         </div>
+
     </div>
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

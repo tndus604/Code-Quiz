@@ -178,21 +178,19 @@ function highScore() {
     scoreContainer.style.display = "none";
     highscoreContainer.style.display = "block"; 
 
-    var Initial = [document.querySelector('#exampleInitial').value];
-    var scorePerCent = [Math.round(100 * score/questions.length)];
-    
-    localStorage.setItem("Initials", JSON.stringify(Initial));
-    
-    localStorage.setItem("Scores",JSON.stringify(scorePerCent));
+    var Initial = document.querySelector('#exampleInitial').value;
 
-    var storedInitials = JSON.parse(localStorage.getItem("Initials")) || [];
-    console.log(storedInitials);
-    var storedScores = JSON.parse(localStorage.getItem("Scores")) || [];
-    console.log(storedScores);
-
-
+    var scorePerCent = Math.round(100 * score/questions.length);
     
-    document.querySelector('#displayHighscore').innerHTML = `<li>${storedInitials} - ${storedScores}%</li>`;    
+    localStorage.setItem("Initials", Initial);
+    
+    localStorage.setItem("Scores",scorePerCent);
+
+    var storedInitials = localStorage.getItem("Initials");
+
+    var storedScores = localStorage.getItem("Scores");
+
+    document.querySelector('#displayHighscore').innerHTML += `<li>${storedInitials} - ${storedScores}%</li>`;    
 }
 
 

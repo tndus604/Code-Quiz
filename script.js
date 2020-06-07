@@ -13,10 +13,11 @@ var progress = document.getElementById("progress");
 var scoreContainer = document.getElementById("scoreContainer");
 var highscoreContainer = document.getElementById("highscoreContainer");
 var highscoreDiv = document.getElementById("high-scorePage");
-var highscoreInputName = document.getElementById("exampleInitial");
+var highscoreInputName = document.querySelector("#exampleInitial");
 var highscoreDisplayName = document.getElementById("highscore-initials");
 var highscoreDisplayScore = document.getElementById("highscore-score");
-var displayScore = document.getElementById("displayScore");
+var displayHighscore = document.getElementById("displayHighscore");
+var submitBtn = document.querySelector("#submitBtn");
 
 
 
@@ -174,24 +175,90 @@ function scoreRender(){
 }
 
 // shows the highscores page
-function highScore() {
-    scoreContainer.style.display = "none";
-    highscoreContainer.style.display = "block"; 
+var initials = [];
+var scores = [];
 
-    var Initial = document.querySelector('#exampleInitial').value;
+
+function init() {
+    var storedInitials = JSON.parse(localStorage.getItem("Initial"));
+  
+    if (storedInitials !== null) {
+       initials = storedInitials;
+    }
+  
+    renderInitials();
+  }
+
+function renderInitials() {
+    displayHighscore.innerHTML = "";
+
+    for (var i = 0; i < initials.length; i++) {
+      var initial = initials[i];
+      var score = scores[i]
+  
+      var li = document.createElement("li");
+      li.textContent = `${initial} - ${score}%`;
+      li.setAttribute("data-index", i);
+  
+    displayHighscore.appendChild(li);
+    }
+  }
+
+  submitBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    init();
+    scoreContainer.style.display = "none";
+    highscoreContainer.style.display = "block";
 
     var scorePerCent = Math.round(100 * score/questions.length);
+  
+    var initialText = highscoreInputName.value;
+    var scoresValue = scorePerCent;
+
+    if (initialText === "" && scoresValue === "") {
+        return;
+    }
+  
+    // Add new todoText to todos array, clear the input
+    initials.push(initialText);
+    scores.push(scoresValue)
+    highscoreInputName.value = "";
+  
+    // Store updated todos in localStorage, re-render the list
+    storeInitials();
+    renderInitials();
+  });
+
+  function storeInitials() {
+    // Stringify and set "todos" key in localStorage to todos array
+    localStorage.setItem("initials", JSON.stringify(initials));
+    localStorage.setItem("scores", JSON.stringify(scores));
+  }
+
+
+
+
+
+// function highScore() {
+//     scoreContainer.style.display = "none";
+//     highscoreContainer.style.display = "block";
+
+//     var Initial = document.querySelector('#exampleInitial').value;
+
+//     var scorePerCent = Math.round(100 * score/questions.length);
     
-    localStorage.setItem("Initials", Initial);
+//     localStorage.setItem("Initials", Initial);
     
-    localStorage.setItem("Scores",scorePerCent);
+//     localStorage.setItem("Scores",scorePerCent);
 
-    var storedInitials = localStorage.getItem("Initials");
+//     var storedInitials = localStorage.getItem("Initials");
 
-    var storedScores = localStorage.getItem("Scores");
+//     var storedScores = localStorage.getItem("Scores");
 
-    document.querySelector('#displayHighscore').innerHTML += `<li>${storedInitials} - ${storedScores}%</li>`;    
-}
+//     document.querySelector('#displayHighscore').innerHTML += `<li>${storedInitials} - ${storedScores}%</li>`;   
+    
+//     li.setAttribute("data-index", i);
+// }
 
 
 //clearing the highscores

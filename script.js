@@ -269,6 +269,7 @@ function renderInitials() {
 
 //clearing the highscores
 function clearHighscore() {
+    localStorage.clear();
     document.querySelector('#displayHighscore').innerHTML = "";
 }
 

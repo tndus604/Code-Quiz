@@ -180,14 +180,20 @@ var scores = [];
 
 
 function init() {
-    var storedInitials = JSON.parse(localStorage.getItem("Initial"));
+    var storedInitials = JSON.parse(localStorage.getItem("initials"));
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
+
   
     if (storedInitials !== null) {
        initials = storedInitials;
     }
-  
-    renderInitials();
-  }
+    if (storedScores !== null) {
+        scores = storedScores;
+    } else {
+        renderInitials();
+    }
+}
+
 
 function renderInitials() {
     displayHighscore.innerHTML = "";
